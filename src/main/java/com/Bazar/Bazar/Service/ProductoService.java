@@ -54,6 +54,8 @@ public class ProductoService implements IProductoService {
         nuevoProducto.setStock(stock);
         nuevoProducto.setVenta(pro.getVenta());
         
+        ProductRepo.save(nuevoProducto);
+        
         
         
         

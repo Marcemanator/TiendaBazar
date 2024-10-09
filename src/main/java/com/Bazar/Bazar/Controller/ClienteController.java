@@ -25,10 +25,11 @@ public class ClienteController {
     
     
     @PostMapping("/clientes/crear")
-   public void crearCliente(@RequestBody Cliente cli){
+   public String crearCliente(@RequestBody Cliente cli){
        
        Cliserv.crearCliente(cli);
        
+       return "Cliente creado";
    }
     
     
@@ -41,23 +42,29 @@ public class ClienteController {
    
    
    @GetMapping("/clientes/{id_cliente}")
-   public void buscarCliente(@PathVariable Long id_cliente){
+   public Cliente buscarCliente(@PathVariable Long id_cliente){
+       Cliente cliente= Cliserv.buscarCliente(id_cliente);
        
-       Cliserv.buscarCliente(id_cliente);
+       return cliente;
+      
        
    }
    
    @PutMapping("/clientes/editar/{id_cliente}")
-   public void editarCliente(@PathVariable Long id_cliente,@RequestParam String nombre,@RequestParam String apellido, @RequestParam String dni){
+   public String editarCliente(@PathVariable Long id_cliente,@RequestParam String nombre,@RequestParam String apellido, @RequestParam String dni){
        
        Cliserv.editarCliente(id_cliente, nombre, apellido, dni);
        
+       return "Cliente editado";
+               
    }
    
    @DeleteMapping("/clientes/eliminar/{id_cliente}")
-   public void eliminarCliente(@PathVariable Long id_cliente){
+   public String eliminarCliente(@PathVariable Long id_cliente){
        
        Cliserv.borrarCliente(id_cliente);
+       return "cliente borrado";
+       
    }
    
    

@@ -22,9 +22,11 @@ public class VentaController {
     VentaService Venserv;
     
     @PostMapping("/ventas/crear")
-    public void crearVentas(@RequestBody Venta ven){
+    public String crearVentas(@RequestBody Venta ven){
         
         Venserv.crearVenta(ven);
+        
+        return "Venta creada";
     }
     
     @GetMapping("/ventas")
@@ -40,16 +42,22 @@ public class VentaController {
     }
     
     @PutMapping("/ventas/editar/{codigo_venta}")
-    public void editarVenta(@PathVariable Long codigo_venta,@RequestParam LocalDate fecha_venta){
+    public String editarVenta(@PathVariable Long codigo_venta,@RequestParam LocalDate fecha_venta){
         
         Venserv.editarVenta(codigo_venta, fecha_venta);
+        
+        return "Venta editada";
+        
+        
         
     }
     
     @DeleteMapping("/ventas/eliminar/{codigo_venta}")
-    public void eliminarVenta(@PathVariable Long codigo_venta){
+    public String eliminarVenta(@PathVariable Long codigo_venta){
         
         Venserv.borrarventa(codigo_venta);
+        
+        return "Venta eliminada";
     }
     
 }

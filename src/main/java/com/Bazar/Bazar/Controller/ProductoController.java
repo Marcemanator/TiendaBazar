@@ -30,30 +30,37 @@ public class ProductoController {
     }
     
     @GetMapping("/productos")
-    public void listarProductos(){
+    public List<Producto> listarProductos(){
         
-        Proserv.listarProductos();
+        
+        
+        return Proserv.listarProductos();
         
         
     }
     
     @GetMapping("/productos/{codigo_producto}")
-    public void buscarProducto(@PathVariable Long codigo_producto){
+    public Producto buscarProducto(@PathVariable Long codigo_producto){
         
         
-        Proserv.buscarProducto(codigo_producto);
+        Producto producto=Proserv.buscarProducto(codigo_producto);
+        
+        return producto;
     }
     
     @PutMapping("/productos/editar/{codigo_producto}")
-    public void editarProducto(@PathVariable Long codigo_producto,@RequestParam String nombre, @RequestParam String marca,@RequestParam Double precio,@RequestParam Double stock){
+    public String editarProducto(@PathVariable Long codigo_producto,@RequestParam String nombre, @RequestParam String marca,@RequestParam Double precio,@RequestParam Double stock){
             
             Proserv.editarproducto(codigo_producto, nombre, marca, precio, stock);
     
+            return "producto editado";
     
 }
     @DeleteMapping("/productos/eliminar/{codigo_producto}")
-    public void eliminarProducto(@PathVariable Long codigo_producto){
+    public String eliminarProducto(@PathVariable Long codigo_producto){
         Proserv.borrarproducto(codigo_producto);
+        
+        return "producto eliminado";
     }
 
 }
