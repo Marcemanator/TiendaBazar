@@ -3,12 +3,16 @@ package com.Bazar.Bazar.Service;
 
 import com.Bazar.Bazar.Model.Producto;
 import com.Bazar.Bazar.Model.Venta;
+import com.Bazar.Bazar.Repository.ClienteRepository;
+import com.Bazar.Bazar.Repository.ProductoRepository;
 import com.Bazar.Bazar.Repository.VentaRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class VentaService implements IVentaService{
@@ -16,6 +20,11 @@ public class VentaService implements IVentaService{
     
     @Autowired
     VentaRepository VentaRepo;
+    @Autowired
+    ClienteRepository CliRepo;
+    
+    @Autowired
+    ProductoRepository ProRep;
 
     @Override
     public List<Venta> listarVentas() {
@@ -25,12 +34,46 @@ public class VentaService implements IVentaService{
     }
 
     @Override
-    public String crearVenta(Venta venta) {
+    public String crearVenta(@RequestBody Venta venta) {
+        List<Double>dineroVentas=new ArrayList();
+        List<Long>idprod=new ArrayList();
         
-        VentaRepo.save(venta);
+        List<Producto>Productos=new ArrayList();
+        for(Producto produ :venta.getListaproductos()){
+            Long pd=produ.getCodigo_producto();
+            idprod.add(pd);
+            }
+            
+                  
+       
+        Double PrecioVenta;
+        Double Totales;
         
-        return "Venta creada";
+        
+        LocalDate ld=LocalDate.now();
+        Venta ven=new Venta();
+        for(Producto pro:venta.getListaproductos()){
+            PrecioVenta=pro.getPrecio();
+            dineroVentas.add(PrecioVenta);
+        }
+        Totales=dineroVentas.stream().mapToDouble(Double::doubleValue).sum();
+       
+        
+        ven.setCodigo_venta(venta.getCodigo_venta());
+        ven.setFecha_venta(ld);
+        ven.setTotal(Totales);
+        ven.setListaproductos(venta.getListaproductos());
+        
+        ven.setCliente(venta.getCliente());
+        
+        
+        VentaRepo.save(ven);
+        
+
+            return "venta creada";
+        
     }
+    
 
     @Override
     public Venta buscarVenta(Long id_venta) {
@@ -78,4 +121,7 @@ public class VentaService implements IVentaService{
        
     }
     
-}
+
+
+
+    }

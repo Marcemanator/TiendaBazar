@@ -3,6 +3,7 @@ package com.Bazar.Bazar.Service;
 
 import com.Bazar.Bazar.Model.Producto;
 import com.Bazar.Bazar.Repository.ProductoRepository;
+import com.Bazar.Bazar.Repository.VentaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class ProductoService implements IProductoService {
     
     @Autowired
     ProductoRepository ProductRepo;
+    
+    @Autowired
+    VentaRepository VentaRepo;
 
     @Override
     public List<Producto> listarProductos() {
@@ -46,6 +50,7 @@ public class ProductoService implements IProductoService {
     public String  editarproducto(Long id_producto, String nombre,String marca, Double precio, Double stock) {
         
         Producto pro=ProductRepo.findById(id_producto).orElse(null);
+        
         Producto nuevoProducto= new Producto();
         nuevoProducto.setCodigo_producto(pro.getCodigo_producto());
         nuevoProducto.setNombre(nombre);

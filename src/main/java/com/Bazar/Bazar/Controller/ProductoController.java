@@ -54,7 +54,7 @@ public class ProductoController {
             Proserv.editarproducto(codigo_producto, nombre, marca, precio, stock);
     
             return "producto editado";
-    
+   
 }
     @DeleteMapping("/productos/eliminar/{codigo_producto}")
     public String eliminarProducto(@PathVariable Long codigo_producto){

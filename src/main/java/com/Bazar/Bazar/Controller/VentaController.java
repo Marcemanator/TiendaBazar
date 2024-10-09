@@ -24,6 +24,7 @@ public class VentaController {
     @PostMapping("/ventas/crear")
     public String crearVentas(@RequestBody Venta ven){
         
+        
         Venserv.crearVenta(ven);
         
         return "Venta creada";
