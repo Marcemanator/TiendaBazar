@@ -8,7 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,21 +26,21 @@ public class Producto {
    private String marca;
    private Double precio;
    private Double stock;
-   @ManyToOne
-   @JoinColumn(name="codigo_venta")
-   @JsonBackReference
-   private Venta venta;
+   @ManyToMany(mappedBy="listaproductos")
+   private List<Venta> ventas;
 
     public Producto() {
     }
 
-    public Producto(Long codigo_producto, String nombre, String marca, Double precio, Double stock) {
+    public Producto(Long codigo_producto, String nombre, String marca, Double precio, Double stock, List<Venta> ventas) {
         this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.marca = marca;
         this.precio = precio;
         this.stock = stock;
+        this.ventas = ventas;
     }
-    
+
+   
     
 }

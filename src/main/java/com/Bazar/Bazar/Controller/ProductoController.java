@@ -2,6 +2,7 @@
 package com.Bazar.Bazar.Controller;
 
 import com.Bazar.Bazar.Model.Producto;
+import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Service.ProductoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class ProductoController {
     }
     
     @PutMapping("/productos/editar/{codigo_producto}")
-    public String editarProducto(@PathVariable Long codigo_producto,@RequestParam String nombre, @RequestParam String marca,@RequestParam Double precio,@RequestParam Double stock){
+    public String editarProducto(@PathVariable Long codigo_producto,@RequestParam String nombre, @RequestParam String marca,@RequestParam Double precio,@RequestParam Double stock,@RequestParam List<Venta>venta){
             
-            Proserv.editarproducto(codigo_producto, nombre, marca, precio, stock);
+            Proserv.editarproducto(codigo_producto, nombre, marca, precio, stock,venta);
     
             return "producto editado";
    

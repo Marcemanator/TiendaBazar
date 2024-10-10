@@ -2,6 +2,7 @@
 package com.Bazar.Bazar.Service;
 
 import com.Bazar.Bazar.Model.Producto;
+import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Repository.ProductoRepository;
 import com.Bazar.Bazar.Repository.VentaRepository;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public String  editarproducto(Long id_producto, String nombre,String marca, Double precio, Double stock) {
+    public String  editarproducto(Long id_producto, String nombre,String marca, Double precio, Double stock,List<Venta>venta) {
         
         Producto pro=ProductRepo.findById(id_producto).orElse(null);
         
@@ -57,7 +58,7 @@ public class ProductoService implements IProductoService {
         nuevoProducto.setMarca(marca);
         nuevoProducto.setPrecio(precio);
         nuevoProducto.setStock(stock);
-        nuevoProducto.setVenta(pro.getVenta());
+        nuevoProducto.setVentas(pro.getVentas());
         
         ProductRepo.save(nuevoProducto);
         

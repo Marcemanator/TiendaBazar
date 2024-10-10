@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -29,8 +31,10 @@ public class Venta {
     private LocalDate fecha_venta;
     private Double total;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(name= "venta_producto", joinColumns=@JoinColumn(name="codigo_venta"),
+            inverseJoinColumns=@JoinColumn(name="codigo_producto"))
+   
     List<Producto> listaproductos;
     @ManyToOne
     @JoinColumn(name = "id_cliente")
@@ -46,6 +50,7 @@ public class Venta {
         this.listaproductos = listaproductos;
         this.cliente = cliente;
     }
-    
+
+  
 
 }

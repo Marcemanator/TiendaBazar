@@ -4,7 +4,9 @@ package com.Bazar.Bazar.Controller;
 import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Service.VentaService;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +24,10 @@ public class VentaController {
     VentaService Venserv;
     
     @PostMapping("/ventas/crear")
-    public String crearVentas(@RequestBody Venta ven){
+    public String crearVentas(@RequestParam List<Long>codigo_producto, @RequestParam Long id_cliente){
         
         
-        Venserv.crearVenta(ven);
+        Venserv.crearVenta(codigo_producto, id_cliente);
         
         return "Venta creada";
     }
