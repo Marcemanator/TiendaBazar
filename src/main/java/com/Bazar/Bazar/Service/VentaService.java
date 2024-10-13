@@ -7,8 +7,11 @@ import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Repository.ClienteRepository;
 import com.Bazar.Bazar.Repository.ProductoRepository;
 import com.Bazar.Bazar.Repository.VentaRepository;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,26 +80,36 @@ public class VentaService implements IVentaService {
 
 
     @Override
-    public String editarVenta(Long codigo_venta, LocalDate fecha_venta) {
+    public String editarVenta(Long codigo_venta, String fecha_venta,List<Long>idsproductos) {
         Venta ven = VentaRepo.findById(codigo_venta).orElse(null);
-        List<Producto> precioTotalProductos = new ArrayList();
+        List<Producto> TotalProductos = new ArrayList();
+        List<Producto>productos=ProRep.findAllById(idsproductos);
+        
         List<Double> precioProductos = new ArrayList();
         Double precios;
         
         Venta ventaNueva = new Venta();
-
+       
+        DateTimeFormatter dtf=  DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha=LocalDate.parse(fecha_venta, dtf);
+        
         ventaNueva.setCodigo_venta(ven.getCodigo_venta());
-        ventaNueva.setFecha_venta(fecha_venta);
+        ventaNueva.setFecha_venta(fecha);
 
-        ventaNueva.setListaproductos(ven.getListaproductos());
-        for (Producto pro : ven.getListaproductos()) {
+        
+        for (Producto pro : productos) {
             precios = pro.getPrecio();
             precioProductos.add(precios);
+           
+            TotalProductos.add(pro);
         }
         Double tot = precioProductos.stream().mapToDouble(Double::doubleValue).sum();
-
         ventaNueva.setTotal(tot);
         ventaNueva.setCliente(ven.getCliente());
+        
+        ventaNueva.setListaproductos(TotalProductos);
+        
+        VentaRepo.save(ventaNueva);
 
         return "Venta editada";
 

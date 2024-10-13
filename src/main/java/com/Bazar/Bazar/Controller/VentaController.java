@@ -1,6 +1,7 @@
 
 package com.Bazar.Bazar.Controller;
 
+import com.Bazar.Bazar.Model.Producto;
 import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Service.VentaService;
 import java.time.LocalDate;
@@ -45,9 +46,9 @@ public class VentaController {
     }
     
     @PutMapping("/ventas/editar/{codigo_venta}")
-    public String editarVenta(@PathVariable Long codigo_venta,@RequestParam LocalDate fecha_venta){
+    public String editarVenta(@PathVariable Long codigo_venta,@RequestParam String fecha_venta,@RequestParam List<Long>idsproductos){
         
-        Venserv.editarVenta(codigo_venta, fecha_venta);
+        Venserv.editarVenta(codigo_venta, fecha_venta,idsproductos);
         
         return "Venta editada";
         
