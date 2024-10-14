@@ -64,5 +64,11 @@ public class ProductoController {
         
         return "producto eliminado";
     }
+    
+    @GetMapping("/productos/falta_stock")
+    public void faltaStock(){
+        
+        Proserv.faltaStock();
+    }
 
 }

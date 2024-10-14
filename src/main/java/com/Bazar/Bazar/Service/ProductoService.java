@@ -5,6 +5,7 @@ import com.Bazar.Bazar.Model.Producto;
 import com.Bazar.Bazar.Model.Venta;
 import com.Bazar.Bazar.Repository.ProductoRepository;
 import com.Bazar.Bazar.Repository.VentaRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,6 +94,24 @@ public class ProductoService implements IProductoService {
         
         return "Producto borrado";
     }
+
+    @Override
+    public List<Producto> faltaStock() {
+        List<Producto>faltaStock=new ArrayList();
+        
+        List<Producto>productos=ProductRepo.findAll();
+        
+        for(Producto pro:productos){
+            
+            if(pro.getStock()<=5){
+                faltaStock.add(pro);
+            }
+        }
+        
+        return faltaStock;
+    }
+    
+    
         
     
 }

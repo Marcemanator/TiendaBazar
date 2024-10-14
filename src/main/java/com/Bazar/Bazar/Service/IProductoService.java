@@ -18,5 +18,7 @@ public interface IProductoService {
     
     public String borrarproducto(Long id_producto);
     
+    public List<Producto>faltaStock ();
+    
     
 }
