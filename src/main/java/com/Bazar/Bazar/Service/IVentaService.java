@@ -21,6 +21,8 @@ public interface IVentaService {
     
     public String borrarventa(Long id_venta);
     
+    public List<Producto> ventaProductos(Long idVenta);
+    
     
     
 }

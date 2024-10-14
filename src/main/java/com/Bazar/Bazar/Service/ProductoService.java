@@ -99,12 +99,19 @@ public class ProductoService implements IProductoService {
     public List<Producto> faltaStock() {
         List<Producto>faltaStock=new ArrayList();
         
+        
         List<Producto>productos=ProductRepo.findAll();
         
         for(Producto pro:productos){
+            Producto producto=new Producto();
             
             if(pro.getStock()<=5){
-                faltaStock.add(pro);
+                producto.setCodigo_producto(pro.getCodigo_producto());
+                producto.setNombre(pro.getNombre());
+                producto.setMarca(pro.getMarca());
+                producto.setPrecio(pro.getPrecio());
+                producto.setStock(pro.getStock());
+                faltaStock.add(producto);
             }
         }
         

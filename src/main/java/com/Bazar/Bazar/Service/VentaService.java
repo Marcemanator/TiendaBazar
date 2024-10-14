@@ -137,6 +137,34 @@ public class VentaService implements IVentaService {
         return "Venta borrada";
 
     }
+
+    @Override
+    public List<Producto>ventaProductos(Long idVenta) {
+        Venta venta=VentaRepo.findById(idVenta).orElse(null);
+        List<Producto>producto=new ArrayList();
+        for(Producto pro:venta.getListaproductos()){
+            Producto product= new Producto();
+            product.setCodigo_producto(pro.getCodigo_producto());
+            product.setNombre(pro.getNombre());
+            product.setMarca(pro.getMarca());
+            product.setPrecio(pro.getPrecio());
+            product.setStock(pro.getStock());
+            
+            producto.add(product);
+            
+         
+            
+            
+        }
+        
+        
+       
+        return producto;
+        
+      
+        
+        
+    }
+
 }
- 
 

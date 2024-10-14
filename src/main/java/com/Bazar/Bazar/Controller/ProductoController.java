@@ -66,9 +66,10 @@ public class ProductoController {
     }
     
     @GetMapping("/productos/falta_stock")
-    public void faltaStock(){
+    public List<Producto>faltaStock(){
         
-        Proserv.faltaStock();
+       return Proserv.faltaStock();
+        
     }
 
 }

@@ -64,4 +64,10 @@ public class VentaController {
         return "Venta eliminada";
     }
     
+    @GetMapping("venta/productos/{id_venta}")
+    public List<Producto> productosVenta(@PathVariable Long id_venta){
+        
+        return Venserv.ventaProductos(id_venta);
+    }
+    
 }
