@@ -51,7 +51,8 @@ public class ClienteController {
    }
    
    @PutMapping("/clientes/editar/{id_cliente}")
-   public String editarCliente(@PathVariable Long id_cliente,@RequestParam String nombre,@RequestParam String apellido, @RequestParam String dni){
+   public String editarCliente(@PathVariable Long id_cliente,@RequestParam (required=false)String nombre,
+           @RequestParam (required=false) String apellido, @RequestParam (required=false)String dni){
        
        Cliserv.editarCliente(id_cliente, nombre, apellido, dni);
        

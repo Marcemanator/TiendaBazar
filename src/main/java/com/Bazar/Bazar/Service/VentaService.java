@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -83,31 +84,44 @@ public class VentaService implements IVentaService {
     public String editarVenta(Long codigo_venta, String fecha_venta,List<Long>idsproductos) {
         Venta ven = VentaRepo.findById(codigo_venta).orElse(null);
         List<Producto> TotalProductos = new ArrayList();
-        List<Producto>productos=ProRep.findAllById(idsproductos);
+        
         
         List<Double> precioProductos = new ArrayList();
-        Double precios;
+        
         
         Venta ventaNueva = new Venta();
        
         DateTimeFormatter dtf=  DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if(fecha_venta!=null && !fecha_venta.isEmpty()){
         LocalDate fecha=LocalDate.parse(fecha_venta, dtf);
+        ventaNueva.setFecha_venta(fecha);
+        }else{
+            ventaNueva.setFecha_venta(ven.getFecha_venta());
+        }
         
         ventaNueva.setCodigo_venta(ven.getCodigo_venta());
-        ventaNueva.setFecha_venta(fecha);
+        
 
         
-        for (Producto pro : productos) {
-            precios = pro.getPrecio();
-            precioProductos.add(precios);
-           
-            TotalProductos.add(pro);
-        }
-        Double tot = precioProductos.stream().mapToDouble(Double::doubleValue).sum();
-        ventaNueva.setTotal(tot);
+       
+        
+        
         ventaNueva.setCliente(ven.getCliente());
         
-        ventaNueva.setListaproductos(TotalProductos);
+        if(idsproductos!=null && !idsproductos.isEmpty()){
+            List<Producto>productos=ProRep.findAllById(idsproductos);
+            precioProductos=productos.stream().map(Producto::getPrecio).collect(Collectors.toList());
+            Double tot = precioProductos.stream().mapToDouble(Double::doubleValue).sum();
+            ventaNueva.setListaproductos(ven.getListaproductos());
+             ventaNueva.setTotal(tot);
+            ventaNueva.setListaproductos(productos);
+            
+       
+        }else{
+            ventaNueva.setListaproductos(ven.getListaproductos());
+            ventaNueva.setTotal(ven.getTotal());
+            
+        }
         
         VentaRepo.save(ventaNueva);
 

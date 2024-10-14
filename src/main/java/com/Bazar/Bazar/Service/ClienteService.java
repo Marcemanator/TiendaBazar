@@ -57,9 +57,20 @@ public class ClienteService implements IClienteService {
         Cliente cli=Clirepo.findById(id_cliente).orElse(null);
         Cliente clienteNuevo=new Cliente();
         clienteNuevo.setId_cliente(cli.getId_cliente());
-        clienteNuevo.setNombre(nombre);
-        clienteNuevo.setApellido(apellido);
-        clienteNuevo.setDni(dni);
+        if(nombre!=null && !nombre.isEmpty()){
+        clienteNuevo.setNombre(nombre);}
+        
+        else{clienteNuevo.setNombre(cli.getNombre());}
+        
+        if(apellido!=null && !apellido.isEmpty()){
+        clienteNuevo.setApellido(apellido);}
+        
+        else{clienteNuevo.setDni(cli.getApellido());}
+        
+        if(dni!=null && !dni.isEmpty()){
+        clienteNuevo.setDni(dni);}
+        
+        else{clienteNuevo.setDni(cli.getDni());}
         
         Clirepo.save(clienteNuevo);
        

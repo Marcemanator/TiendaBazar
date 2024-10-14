@@ -54,10 +54,25 @@ public class ProductoService implements IProductoService {
         
         Producto nuevoProducto= new Producto();
         nuevoProducto.setCodigo_producto(pro.getCodigo_producto());
-        nuevoProducto.setNombre(nombre);
-        nuevoProducto.setMarca(marca);
-        nuevoProducto.setPrecio(precio);
-        nuevoProducto.setStock(stock);
+        
+        if(nombre!=null&& !nombre.isEmpty()){
+        nuevoProducto.setNombre(nombre);}
+        else{nuevoProducto.setNombre(pro.getNombre());}
+        
+        if(marca!=null&& !marca.isEmpty()){
+        nuevoProducto.setMarca(marca);}
+        else{nuevoProducto.setMarca(pro.getMarca());
+        }
+        if(precio!=null&& !precio.equals("")){
+        nuevoProducto.setPrecio(precio);}
+        else{nuevoProducto.setPrecio(pro.getPrecio());}
+        
+        if(stock!=null&& !stock.equals("")){
+        nuevoProducto.setStock(stock);}
+        else{nuevoProducto.setStock(pro.getStock());
+            
+        }
+        
         nuevoProducto.setVentas(pro.getVentas());
         
         ProductRepo.save(nuevoProducto);

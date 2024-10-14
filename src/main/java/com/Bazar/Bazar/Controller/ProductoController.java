@@ -50,7 +50,8 @@ public class ProductoController {
     }
     
     @PutMapping("/productos/editar/{codigo_producto}")
-    public String editarProducto(@PathVariable Long codigo_producto,@RequestParam String nombre, @RequestParam String marca,@RequestParam Double precio,@RequestParam Double stock,@RequestParam List<Venta>venta){
+    public String editarProducto(@PathVariable Long codigo_producto,@RequestParam (required=false) String nombre, @RequestParam(required=false) String marca,
+            @RequestParam (required=false) Double precio,@RequestParam (required=false)  Double stock,@RequestParam  (required=false) List<Venta>venta){
             
             Proserv.editarproducto(codigo_producto, nombre, marca, precio, stock,venta);
     

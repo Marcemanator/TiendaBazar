@@ -46,7 +46,7 @@ public class VentaController {
     }
     
     @PutMapping("/ventas/editar/{codigo_venta}")
-    public String editarVenta(@PathVariable Long codigo_venta,@RequestParam String fecha_venta,@RequestParam List<Long>idsproductos){
+    public String editarVenta(@PathVariable Long codigo_venta,@RequestParam(required=false) String fecha_venta,@RequestParam(required=false) List<Long>idsproductos){
         
         Venserv.editarVenta(codigo_venta, fecha_venta,idsproductos);
         
