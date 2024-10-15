@@ -8,6 +8,9 @@ import com.Bazar.Bazar.Repository.ClienteRepository;
 import com.Bazar.Bazar.Repository.ProductoRepository;
 import com.Bazar.Bazar.Repository.VentaRepository;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,48 +32,34 @@ public class BazarDTOController {
     VentaRepository VenRepo;
    
 
-    @GetMapping("/dto")
-    public List<BazarDTO> bazardto( @RequestParam Long idcliente) {
-        BazarDTO bazar = new BazarDTO();
-        List<BazarDTO> bdto = new ArrayList();
-
-        List<Cliente> clientes = CliRepo.findAll();
-        List<Producto> productos = ProRepo.findAll();
-        List<Venta> ventas = VenRepo.findAll();
-
-        for (Venta ven : ventas) {
-            int cantidadproductos=0;
+    @GetMapping("ventas/mayor_venta")
+    public BazarDTO bazardto( ) {
+        int pr=0;
         
-            for (Producto pro : productos) {
-                cantidadproductos++;
-                for (Cliente cli : clientes) {
-                    if(idcliente.equals(cli.getId_cliente())){
-                        
-                    
-
-                    bazar.setCodigo_venta(ven.getCodigo_venta());
-                    bazar.setTotal(ven.getTotal());
-                 
-
-                    
-                    bazar.setCantidadProductos(cantidadproductos);
-                    
-
-                    bazar.setNombrecliente(cli.getNombre());
-                    bazar.setApellidoCliente(cli.getApellido());
-                    bdto.add(bazar);
-                    break;
-
-                }
-            }
-
+        List<Venta>ventas=VenRepo.findAll();
+        List<Venta>v=new ArrayList();
+        
+        Venta ventaTotAlto=Collections.max(ventas, Comparator.comparing(Venta::getTotal));
        
-        
-        }
-
-  
-        }
-          return bdto;
+      
+          
+           BazarDTO bzdto=new BazarDTO();
+           
+           
+           pr++;
+           bzdto.setCodigo_venta(ventaTotAlto.getCodigo_venta());
+           bzdto.setNombrecliente(ventaTotAlto.getCliente().getNombre());
+           bzdto.setApellidoCliente(ventaTotAlto.getCliente().getApellido());
+           bzdto.setCantidadProductos(ventaTotAlto.getListaproductos().size());
+           bzdto.setTotal(ventaTotAlto.getTotal());
+           
+           
+           return bzdto;
+    
+    
     }
 }
+
+    
+
 
